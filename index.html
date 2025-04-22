@@ -8,46 +8,54 @@
       background-color: #fff;
       font-family: 'Georgia', serif;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       height: 100vh;
       margin: 0;
-      flex-direction: column;
     }
+
     h1 {
-      font-size: 32px;
+      font-size: 28px;
       text-align: center;
       color: #333;
+      margin-bottom: 30px;
       text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     }
+
+    .music-icon {
+      font-size: 30px;
+      cursor: pointer;
+      color: #666;
+      transition: color 0.3s, transform 0.3s;
+    }
+
+    .music-icon:hover {
+      color: #000;
+      transform: scale(1.2);
+    }
+
     audio {
-      display: none; /* Kontrol çubuğunu gizledik */
+      display: none;
     }
   </style>
 </head>
 <body>
   <h1>"Işığın değdiği her yerde bir gölge saklanır."</h1>
 
-  <audio id="bg-music" autoplay loop>
+  <div class="music-icon" onclick="playMusic()">🎵</div>
+
+  <audio id="bg-music" loop>
     <source src="muzik.mp3" type="audio/mpeg">
     Tarayıcınız ses öğesini desteklemiyor.
   </audio>
 
   <script>
-    const audio = document.getElementById("bg-music");
-
-    // Sayfa yüklenince otomatik başlatmayı dene
-    window.addEventListener('load', () => {
-      const playPromise = audio.play();
-      if (playPromise !== undefined) {
-        playPromise.catch(() => {
-          // Tarayıcı izin vermezse: ilk tıklamada başlat
-          document.body.addEventListener('click', () => {
-            audio.play();
-          }, { once: true });
-        });
-      }
-    });
+    function playMusic() {
+      const audio = document.getElementById("bg-music");
+      audio.volume = 0.6; // biraz yumuşak ses
+      audio.play();
+    }
   </script>
 </body>
 </html>
