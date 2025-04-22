@@ -12,6 +12,7 @@
       align-items: center;
       height: 100vh;
       margin: 0;
+      flex-direction: column;
     }
     h1 {
       font-size: 32px;
@@ -20,18 +21,33 @@
       text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
     }
     audio {
-      position: absolute;
-      bottom: 20px;
-      left: 20px;
+      display: none; /* Kontrol çubuğunu gizledik */
     }
   </style>
 </head>
 <body>
   <h1>"Işığın değdiği her yerde bir gölge saklanır."</h1>
 
-  <audio autoplay loop controls>
+  <audio id="bg-music" autoplay loop>
     <source src="muzik.mp3" type="audio/mpeg">
     Tarayıcınız ses öğesini desteklemiyor.
   </audio>
+
+  <script>
+    const audio = document.getElementById("bg-music");
+
+    // Sayfa yüklenince otomatik başlatmayı dene
+    window.addEventListener('load', () => {
+      const playPromise = audio.play();
+      if (playPromise !== undefined) {
+        playPromise.catch(() => {
+          // Tarayıcı izin vermezse: ilk tıklamada başlat
+          document.body.addEventListener('click', () => {
+            audio.play();
+          }, { once: true });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
